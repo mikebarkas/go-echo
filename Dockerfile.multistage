@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1
+
+# Build stage for Go tools and compiling.
+FROM golang:1.21 AS build
+LABEL authors="Mike Barkas"
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+COPY *.go ./
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /go-echo
+
+# Next stage to use the previous binary.
+FROM alpine:3.18 AS release
+
+WORKDIR /
+
+COPY --from=build /go-echo /go-echo
+EXPOSE 8080
+# todo: add nonroot user.
+ENTRYPOINT ["/go-echo"]
