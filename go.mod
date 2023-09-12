@@ -2,7 +2,12 @@ module github.com/mikebarkas/go-echo
 
 go 1.21.0
 
-require github.com/labstack/echo/v4 v4.11.1
+require (
+	github.com/cenkalti/backoff/v4 v4.2.1
+	github.com/cockroachdb/cockroach-go/v2 v2.3.5
+	github.com/labstack/echo/v4 v4.11.1
+	github.com/lib/pq v1.10.9
+)
 
 require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
